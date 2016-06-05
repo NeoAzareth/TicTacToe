@@ -1,0 +1,31 @@
+<resources>
+    <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+    </style>
+
+    <style name="MessageLabel">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- fill parent -->
+    <style name="layout_full">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+    </style>
+
+    <!-- wrap widget -->
+    <style name="layout_wrap">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <!-- horizontal layout-->
+    <style name="layout_horizontal" parent="layout_full">
+        <item name="android:layout_width">0px</item>
+    </style>
+
+    <!-- vertical layout-->
+    <style name="layout_vertical" parent="layout_full">
+        <item name="android:layout_height">0px</item>
+    </style>
+</resources>
