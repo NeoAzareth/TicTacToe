@@ -17,6 +17,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="com.sichengzhu.tictactoe.SettingsActivity"
+            android:label="Settings"></activity>
 
     </application>
 </manifest>

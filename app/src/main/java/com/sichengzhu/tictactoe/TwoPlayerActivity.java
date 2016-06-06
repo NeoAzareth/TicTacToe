@@ -62,8 +62,8 @@ public class TwoPlayerActivity extends Activity implements OnClickListener {
 //        Typeface type = Typeface.createFromAsset(getAssets(), "fonts/Cheveuxdange.ttf");
 //        gameMessageLabel.setTypeface(type);
 
-        playerOne = new Player("O",'o');
-        playerTwo = new Player("X",'x');
+        playerOne = new Player("Player O",'o');
+        playerTwo = new Player("Player X",'x');
 
         sound = MediaPlayer.create(this, R.raw.pencil);
         winSound = MediaPlayer.create(this, R.raw.woohoo);
@@ -73,9 +73,9 @@ public class TwoPlayerActivity extends Activity implements OnClickListener {
          *  Assume player one kicks off this game first if new game
          */
         if(isTurn == '\0' || isTurn == playerOne.getPlayerMarker())
-            gameMessageLabel.setText("Player " + playerOne.getName() + "'s turn");
+            gameMessageLabel.setText(playerOne.getName() + "'s turn");
         else if(isTurn == playerTwo.getPlayerMarker())
-            gameMessageLabel.setText("Player " + playerTwo.getName() + "'s turn");
+            gameMessageLabel.setText(playerTwo.getName() + "'s turn");
 
         //set click listeners
         button[0][0].setOnClickListener(this);
@@ -90,6 +90,9 @@ public class TwoPlayerActivity extends Activity implements OnClickListener {
 
         // Enable screen rotation
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR);
+
+        // set the default values for the preferences
+        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 
         // get default SharedPreferences object
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
@@ -126,6 +129,17 @@ public class TwoPlayerActivity extends Activity implements OnClickListener {
     @Override
     public void onResume() {
         super.onResume();
+
+        String playerOneName = prefs.getString("pref_remember_player_one_name","");
+        String playerTwoName = prefs.getString("pref_remember_player_two_name","");
+
+        if (!(playerOneName.equals(""))) {
+            playerOne.setName(playerOneName);
+        }
+
+        if (!(playerTwoName.equals(""))){
+            playerTwo.setName(playerTwoName);
+        }
 
         char[][] newBoard = new char[3][3];
 
@@ -178,9 +192,9 @@ public class TwoPlayerActivity extends Activity implements OnClickListener {
             isTurn = prefs.getString("turn", "").charAt(0);
 
         if(isTurn == playerOne.getPlayerMarker())
-            gameMessageLabel.setText("Player " + playerOne.getName() + "'s turn");
+            gameMessageLabel.setText(playerOne.getName() + "'s turn");
         else if(isTurn == playerTwo.getPlayerMarker())
-            gameMessageLabel.setText("Player " + playerTwo.getName() + "'s turn");
+            gameMessageLabel.setText(playerTwo.getName() + "'s turn");
 
         isGameOver = prefs.getBoolean("isGameOver", false);
         isTie = prefs.getBoolean("isTie", false);
@@ -282,7 +296,7 @@ public class TwoPlayerActivity extends Activity implements OnClickListener {
                 checkGameStatus();
 
                 if(!isGameOver)
-                    gameMessageLabel.setText("Player " + playerOne.getName() + "'s turn");
+                    gameMessageLabel.setText(playerOne.getName() + "'s turn");
 
                 if(isTie)
                     gameMessageLabel.setText("Game tie");
@@ -301,7 +315,7 @@ public class TwoPlayerActivity extends Activity implements OnClickListener {
                 checkGameStatus();
 
                 if(!isGameOver)
-                    gameMessageLabel.setText("Player " + playerTwo.getName() + "'s turn");
+                    gameMessageLabel.setText(playerTwo.getName() + "'s turn");
 
                 if(isTie)
                     gameMessageLabel.setText("Game tie");
@@ -364,6 +378,9 @@ public class TwoPlayerActivity extends Activity implements OnClickListener {
                 startActivity(newGame);
                 return true;
 
+            case R.id.menu_settings:
+                startActivity(new Intent(getApplicationContext(),SettingsActivity.class));
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

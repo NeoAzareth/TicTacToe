@@ -3,5 +3,8 @@
 
     <string name="action_new_game">New Game</string>
     <string name="title_activity_new_game">New Game</string>
+    <string name="action_settings">Settings</string>
+    <string name="player_one_title">Player O name</string>
+    <string name="player_two_title">Player X name</string>
 
 </resources>
